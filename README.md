@@ -1,4 +1,4 @@
-![Cooked Master](logo.png)
+![Cooked Master](CookedMaster.jpg)
 
 
 # **The Cooked Book**
