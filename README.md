@@ -5,9 +5,9 @@
 Creators: Campbell Furr, Joshua J, Michelle Tra, Tyler Tran
 ## Introduction
 The Cooked Book is a functional and user-friendly website that helps users decide what to cook based on the ingredients they have. By inputting available ingredients, users will receive meal suggestions, making cooking more convenient and reducing food waste.  
-# Features
+## Features
 [TO BE CONT.]
-# Technologies Used
+## Technologies Used
 [TO BE CONT.]
-# Future Improvements
+## Future Improvements
 [TO BE CONT.]
