@@ -1,4 +1,4 @@
-![Cooked Master](TheCookedMaster.png)
+![Cooked Master](COOKED.png)
 
 
 # **The Cooked Book**
