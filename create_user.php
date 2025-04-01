@@ -37,50 +37,109 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Create Account</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f4f4;
-        }
-        .signup-container {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        input {
-            display: block;
-            width: 100%;
-            margin: 10px 0;
-            padding: 8px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>Create Account</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Courier New', monospace;
+      background-color: #f5f0e6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .signup-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #fff8ee;
+      border-radius: 20px;
+      padding: 2.5em;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 380px;
+      text-align: center;
+    }
+
+    .logo {
+      width: 240px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .signup-box h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1em;
+      color: #5a4b3c;
+    }
+
+    .signup-box label {
+      display: block;
+      font-size: 1rem;
+      color: #5a4b3c;
+      margin-top: 1em;
+      margin-bottom: 0.5em;
+      text-align: left;
+    }
+
+    .signup-box input[type="text"],
+    .signup-box input[type="password"] {
+      width: 100%;
+      padding: 0.75em;
+      font-size: 1rem;
+      border: 1px solid #d5c3ae;
+      border-radius: 10px;
+      background-color: #fff;
+      margin-bottom: 1em;
+    }
+
+    .signup-box input[type="submit"] {
+      width: 100%;
+      padding: 0.8em;
+      font-size: 1.1rem;
+      background-color: #e0d5c3;
+      color: #5a4b3c;
+      border: none;
+      border-radius: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .signup-box input[type="submit"]:hover {
+      background-color: #d2c0ac;
+    }
+  </style>
 </head>
 <body>
-    <div class="signup-container">
-        <h2>Create Account</h2>
-        <form action="create_user.php" method="POST">
-            <label for="new-username">Username:</label>
-            <input type="text" name="new-username" required>
-            
-            <label for="new-email">ema:</label>
-            <input type="text" name="new-email" required>    
+  <div class="signup-card">
+    <img src="photos/TheCookedMaster.png" alt="Cooked Book Logo" class="logo" />
+    <div class="signup-box">
+      <h2>Create Account</h2>
+      <form action="create_user.php" method="POST">
+        <label for="new-username">Username:</label>
+        <input type="text" name="new-username" id="new-username" required>
 
-            <label for="new-password">Password:</label>
-            <input type="password" name="new-password" required>
-            
-            <label for="confirm-password">Confirm Password:</label>
-            <input type="password" name="confirm-password" required>
-            
-            <input type="submit" value="Create Account">
-        </form>
+        <label for="new-email">Email:</label>
+        <input type="text" name="new-email" id="new-email" required>
+
+        <label for="new-password">Password:</label>
+        <input type="password" name="new-password" id="new-password" required>
+
+        <label for="confirm-password">Confirm Password:</label>
+        <input type="password" name="confirm-password" id="confirm-password" required>
+
+        <input type="submit" value="Create Account">
+      </form>
     </div>
+  </div>
 </body>
 </html>
