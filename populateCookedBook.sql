@@ -1,0 +1,18 @@
+INSERT INTO ingredients (name) VALUES 
+('Salt'),
+('Pepper'),
+('Olive Oil'),
+('Soy Sauce'),
+('Garlic'),
+('Chicken'),
+('Eggs'),
+('Butter'),
+('Milk'),
+('Flour'),
+('Cheese'),
+('Sugar'),
+('Rice'),
+('Beef'),
+('Carrots'),
+('Broccoli'),
+('Potatoes');

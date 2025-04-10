@@ -4,33 +4,32 @@ require_once 'databaseCooked.php';
 $conn = Database::dbConnect();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $username = trim($_POST['new-username']);
-    $email = trim($_POST['new-email']);
-    $password = trim($_POST['new-password']);
-    $confirm_pw = trim($_POST['confirm-password']);
+  $username = trim($_POST['new-username']);
+  $email = trim($_POST['new-email']);
+  $password = trim($_POST['new-password']);
+  $confirm_pw = trim($_POST['confirm-password']);
+  $message = "";
 
-    if ($password !== $confirm_pw) {
-        die("Passwords do not match. <a href='create_user.php'>Go back</a>");
-    }
-
+  if ($password !== $confirm_pw) {
+      $message = "Passwords do not match.\nPlease try again.";
+  }
+  else{
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
     try {
         $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':password', $hashedPassword);
         $stmt->execute();
-
-        echo "Account created successfully! <a href='login.php'>Login here</a>";
+        $message = "Account created successfully! <a href='login.php'>Login here</a>";
     } catch (PDOException $e) {
         if (str_contains($e->getMessage(), 'Integrity constraint violation')) {
-            echo "That username is already taken. <a href='create_user.php'>Try again</a>";
+            $message = "That username is already taken.<br>Please try again.";
         } else {
-            echo "Error: " . $e->getMessage();
+            $message = "Error: " . $e->getMessage();
         }
     }
-
+  }
 }
 ?>
 
@@ -123,6 +122,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <div class="signup-card">
     <img src="photos/TheCookedMaster.png" alt="Cooked Book Logo" class="logo" />
     <div class="signup-box">
+      <?= $message ?>
       <h2>Create Account</h2>
       <form action="create_user.php" method="POST">
         <label for="new-username">Username:</label>

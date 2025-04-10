@@ -33,19 +33,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(':username', $username);
         $stmt->execute();
 
+        $message = "";
         if ($stmt->rowCount() === 1) {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
             if (password_verify($password, $row['password'])) {
                 $_SESSION['user_id'] = $row['user_id'];
                 $_SESSION['username'] = $username;
                 $_SESSION['role'] = 'user';
-                header("Location: landingPage.php");
+                header("Location: index.php");
                 exit;
             } else {
-                echo "Invalid password.";
+                $message = "Invalid password. Please try again";
             }
         } else {
-            echo "User not found.";
+            $message = "User not found.<br><a href='create_user.php'>Create Account Here</a>";
         }
     }
 }
@@ -139,6 +140,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <div class="login-card">
       <img src="photos/TheCookedMaster.png" alt="Cooked Book Logo" class="logo" />
       <div class="login-box">
+        <?= $message ?>
         <h2>Login</h2>
         <form method="POST" action="login.php">
           <label for="username">Username:</label>

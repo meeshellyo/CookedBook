@@ -18,7 +18,7 @@ if ($role === 'admin' && !isset($_GET['viewasuser'])) {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Cooked Book</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/styleUSERVIEW.css" />
 </head>
 <body>
   <header>
@@ -59,14 +59,38 @@ if ($role === 'admin' && !isset($_GET['viewasuser'])) {
       <?php endif; ?>
     </aside>
 
-    <!-- Main Content -->
+    <!-- the main tabs -->
     <main class="main-content">
       <h2>The Cooked Masters</h2>
-      <div class="recipe-grid">
-        <div class="card"><a href="userRecipes.php?creator=campbell">Campbell Furr</a></div>
-        <div class="card"><a href="userRecipes.php?creator=joshua">Joshua J</a></div>
-        <div class="card"><a href="userRecipes.php?creator=tyler">Tyler Tran</a></div>
-        <div class="card"><a href="userRecipes.php?creator=michelle">Michelle Tra</a></div>
+
+          <!-- campbell tab -->
+      <div class="card"><a href="usersRecipes.php?creator=Campbell">
+        <img src="photos/chefcamp.png" alt="Campbell Furr" />
+        Campbell Furr
+      </a>
+      </div>
+
+          <!-- josh tab -->
+      <div class="card"><a href="usersRecipes.php?creator=Joshua">
+        <img src="photos/chefjosh.png" alt="Joshua J" />
+        Joshua J
+      </a>
+      </div>
+
+          <!-- tyler tab -->
+       <div class="card"><a href="usersRecipes.php?creator=Tyler">
+        <img src = "photos/cheftt.png" alt = "Tyler Tran" />
+        Tyler Tran
+      </a>
+      </div>
+
+          <!-- michelle tab -->
+      <div class="card"><a href="usersRecipes.php?creator=Michelle">
+        <img src = "photos/chefmichelle.png" alt = "Michelle Tra" />
+      Michelle Tra
+      </a>
+      </div>
+
         <div class="card"><a href="all_recipes.php">All Recipes</a></div>
       </div>
     </main>
