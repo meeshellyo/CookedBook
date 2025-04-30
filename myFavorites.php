@@ -1,15 +1,20 @@
 <?php
 session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 require_once("databaseCooked.php");
 
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit();
+  header("Location: login.php");
+  exit();
 }
 
 $conn = Database::dbConnect();
 $user_id = $_SESSION['user_id'];
 
+// grabs the user's favorited recipes along with all of its information.  order by most recently favorited
 $stmt = $conn->prepare("
     SELECT r.recipe_id, r.name, r.difficulty, a.username AS creator
     FROM users_favorites uf
@@ -91,6 +96,7 @@ $favorites = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <?php if (!empty($favorites)): ?>
     <div class="recipe-grid">
       <?php foreach ($favorites as $fav): ?>
+        <!-- redirects user to the recipe if they select their favorited recipe -->
         <a href="recipeDetails.php?id=<?= $fav['recipe_id'] ?>&source=myFavorites" class="card-link">
           <div class="card">
             <h3><?= htmlspecialchars($fav['name']) ?></h3>

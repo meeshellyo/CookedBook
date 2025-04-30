@@ -12,11 +12,12 @@ try {
     $stmt->execute([$id]);
 
     // redirect back to adminManageRecipe page
+    $_SESSION['recipe_deleted'] = true; // ✅ set flash flag
     header("Location: adminManageRecipe.php");
     exit();
-
     // error if doesnt succeed
 } catch (PDOException $e) {
     echo "Error deleting recipe: " . $e->getMessage();
 }
 ?>
+

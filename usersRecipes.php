@@ -7,19 +7,21 @@ $conn = Database::dbConnect();
 $chefInfo = [
   'Michelle' => [
     'photo' => 'photos/chefmichelle.png',
-    'bio' => 'Hi!  I am Michelle and I blehblebhksdfjsdf'
+    'bio' => 'Hi!  I am Michelle and I prefer sweet treats and drinks oppossed to food!  Dont get me wrong, I still eat a lot.  Have fun checking out some of my creations!'
   ],
   'Campbell' => [
     'photo' => 'photos/chefcamp.png',
-    'bio' => 'wejgaskjdfawkjegahsdfajwegasdf'
+    'bio' => 'Hi Im Campbell, and I like to share some of my family recipes with the world. I hope you enjoy some southern specials like gumbo, hoppin john, and babas red beans!'
   ],
     'Joshua' => [
     'photo' => 'photos/chefjosh.png',
-    'bio' => 'asdjkghalwef'
+    'bio' => 'I am josh, thanks for checking out my recipes!
+      I like to eat food, you also have to eat to live
+      here are some recipes for you! please cook with caution'
   ],
   'Tyler' => [
     'photo' => 'photos/cheftt.png',
-    'bio' => 'ajsdkhwkljfksldgwa'
+    'bio' => 'Hey, I’m Tyler Tran—a college student by day and passionate home chef by night. Between classes and campus life, I find joy in the kitchen, creating everything from late-night comfort food to fun, flavor-packed meals that anyone can make. My recipes are all about simplicity, creativity, and sharing good food with good people. Whether youre looking for a quick bite or something to impress your friends, Im here to help make cooking feel easy and enjoyable.'
   ]
 ];
 
@@ -57,6 +59,7 @@ $recipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <meta charset="UTF-8">
   <title><?= htmlspecialchars($admin['username']) ?>'s Recipes</title>
   <link rel="stylesheet" href="css/styleUSERVIEW.css">
+  <!-- had to put the .css in the file because it wouldn't work in the styleUSERVIEW.css file -->
   <style>
     .recipe-grid {
       display: grid;
@@ -145,11 +148,11 @@ $recipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <?php if (!empty($recipes)): ?>
     <div class="recipe-grid">
       <?php foreach ($recipes as $recipe): ?>
-<a href="recipeDetails.php?id=<?= $recipe['recipe_id'] ?>&creator=<?= urlencode($admin['username']) ?>&source=userRecipes" class="card-link">
+        <a href="recipeDetails.php?id=<?= $recipe['recipe_id'] ?>&creator=<?= urlencode($admin['username']) ?>&source=userRecipes" class="card-link">
             <div class="card">
             <h3><?= htmlspecialchars($recipe['name']) ?></h3>
             <p><strong>Difficulty:</strong> <?= htmlspecialchars($recipe['difficulty']) ?></p>
-          </div>
+            </div>
         </a>
       <?php endforeach; ?>
     </div>

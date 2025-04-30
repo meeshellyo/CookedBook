@@ -3,32 +3,30 @@ session_start();
 require_once("databaseCooked.php");
 
 if (!isset($_SESSION['user_id'])) {
-    die("You must be logged in to unfavorite a recipe.");
-}
-
-$userId = $_SESSION['user_id'];
-$recipeId = $_POST['recipe_id'] ?? null;
-$source = $_POST['source'] ?? 'all_recipes'; // pulled from the form
-$creator = $_POST['creator'] ?? null;
-
-if (!$recipeId) {
-    die("Invalid request.");
+    header("Location: login.php");
+    exit();
 }
 
 $conn = Database::dbConnect();
 
-// Delete from favorites
-$stmt = $conn->prepare("DELETE FROM users_favorites WHERE user_id = ? AND recipe_id = ?");
-$stmt->execute([$userId, $recipeId]);
+if (isset($_POST['recipe_id'])) {
+    $recipeId = $_POST['recipe_id'];
+    $userId = $_SESSION['user_id'];
 
-// Determine proper redirect based on source
-if ($source === 'myFavorites') {
-    $redirect = 'myFavorites.php';
-} elseif ($source === 'userRecipes' && $creator) {
-    $redirect = 'usersRecipes.php?creator=' . urlencode($creator);
-} else {
-    $redirect = 'all_recipes.php';
+    // delete from users favorites
+    $stmt = $conn->prepare("DELETE FROM users_favorites WHERE user_id = ? AND recipe_id = ?");
+    $stmt->execute([$userId, $recipeId]);
 }
 
-header("Location: $redirect");
+// redirects
+$source = $_POST['source'] ?? 'all_recipes';
+$creator = $_POST['creator'] ?? '';
+
+$redirectUrl = "recipeDetails.php?id=$recipeId&source=" . urlencode($source);
+if (!empty($creator)) {
+    $redirectUrl .= "&creator=" . urlencode($creator);
+}
+
+header("Location: $redirectUrl");
 exit();
+?>

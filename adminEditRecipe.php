@@ -8,7 +8,7 @@ if (!$recipe_id) {
     die("Recipe ID missing.");
 }
 
-// Get recipe data
+// get recipe data
 $stmt = $db->prepare("SELECT * FROM recipes WHERE recipe_id = ?");
 $stmt->execute([$recipe_id]);
 $recipe = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -16,10 +16,10 @@ if (!$recipe) {
     die("Recipe not found.");
 }
 
-// Get all ingredients
+// get all ingredients
 $allIngredients = $db->query("SELECT * FROM ingredients ORDER BY name ASC")->fetchAll(PDO::FETCH_ASSOC);
 
-// Get recipe's current ingredients
+// get recipe's current ingredients
 $stmt = $db->prepare("SELECT ingredient_id FROM recipe_ingredients WHERE recipe_id = ?");
 $stmt->execute([$recipe_id]);
 $usedIngredients = array_column($stmt->fetchAll(PDO::FETCH_ASSOC), 'ingredient_id');
@@ -53,7 +53,7 @@ $usedIngredients = array_column($stmt->fetchAll(PDO::FETCH_ASSOC), 'ingredient_i
     <label>Name:</label><br>
     <input type="text" name="name" value="<?= htmlspecialchars($recipe['name']) ?>" required><br><br>
 
-    <label>Difficulty:</label><br>
+    <label>Difficulty (1-5): </label><br>
     <input type="number" name="difficulty" value="<?= $recipe['difficulty'] ?>"><br><br>
 
     <label>Description:</label><br>

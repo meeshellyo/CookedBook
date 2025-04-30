@@ -21,7 +21,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     <h1>The Cooked Book - Our Admin Dashboard</h1>
     <div class="nav-buttons">
       <span>Welcome, <?= htmlspecialchars($_SESSION['username']) ?> (Admin)</span>
-      <a href="index.php?viewasuser=true">View as User</a>
+      <a href="adminViewAsUser.php">View as User</a>
       <a href="logout.php">Logout</a>
     </div>
   </header>
@@ -34,7 +34,6 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
         <li><a href="adminManageRecipe.php?action=edit">edit recipe</a></li>
         <li><a href="adminManageRecipe.php?action=delete">delete recipe</a></li>
         <li><a href="adminManageRecipe.php">view recipes</a></li>
-        <li><a href="adminManageUsers.php">manage users??tbh idk what this is gonna be for lol</a></li>
       </ul>
     </div>
   </div>

@@ -1,4 +1,5 @@
 <?php
+//this page loads up all of the recipes
 session_start();
 require_once("databaseCooked.php");
 

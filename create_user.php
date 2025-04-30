@@ -1,39 +1,39 @@
 <?php
+session_start();
 require_once 'databaseCooked.php';
 
 $conn = Database::dbConnect();
+$message = "";
+$redirect = false;
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $username = trim($_POST['new-username']);
   $email = trim($_POST['new-email']);
   $password = trim($_POST['new-password']);
   $confirm_pw = trim($_POST['confirm-password']);
-  $message = "";
 
   if ($password !== $confirm_pw) {
-      $message = "Passwords do not match.\nPlease try again.";
-  }
-  else{
+    $message = "Passwords do not match.<br>Please try again.";
+  } else {
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
     try {
-        $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
-        $stmt->bindParam(':username', $username);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':password', $hashedPassword);
-        $stmt->execute();
-        $message = "Account created successfully! <a href='login.php'>Login here</a>";
+      $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
+      $stmt->bindParam(':username', $username);
+      $stmt->bindParam(':email', $email);
+      $stmt->bindParam(':password', $hashedPassword);
+      $stmt->execute();
+      $message = "Account created successfully! One sec...  Redirecting to login...";
+      $redirect = true;
     } catch (PDOException $e) {
-        if (str_contains($e->getMessage(), 'Integrity constraint violation')) {
-            $message = "That username is already taken.<br>Please try again.";
-        } else {
-            $message = "Error: " . $e->getMessage();
-        }
+      if (str_contains($e->getMessage(), 'Integrity constraint violation')) {
+        $message = "That username or email is already taken.<br>Please try again.";
+      } else {
+        $message = "Error: " . $e->getMessage();
+      }
     }
   }
 }
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -116,13 +116,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     .signup-box input[type="submit"]:hover {
       background-color: #d2c0ac;
     }
+
+    .message {
+      margin-bottom: 1em;
+      font-weight: bold;
+      color: black;
+    }
   </style>
+  <?php if ($redirect): ?>
+    <meta http-equiv="refresh" content="2;url=login.php">
+  <?php endif; ?>
 </head>
 <body>
   <div class="signup-card">
     <img src="photos/TheCookedMaster.png" alt="Cooked Book Logo" class="logo" />
     <div class="signup-box">
-      <?= $message ?>
+      <?php if (!empty($message)): ?>
+        <div class="message"><?= $message ?></div>
+      <?php endif; ?>
       <h2>Create Account</h2>
       <form action="create_user.php" method="POST">
         <label for="new-username">Username:</label>
@@ -143,3 +154,4 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   </div>
 </body>
 </html>
+

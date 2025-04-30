@@ -3,11 +3,27 @@ session_start();
 require_once 'databaseCooked.php';
 $db = Database::dbConnect();
 
-// this will get the action from query string EDIT,DELETE,NULL
+$deletedPopup = false;
+$createdPopup = false;
+$updatedPopup = false;
+
+if (isset($_SESSION['recipe_deleted']) && $_SESSION['recipe_deleted']) {
+    $deletedPopup = true;
+    unset($_SESSION['recipe_deleted']);
+}
+if (isset($_SESSION['recipe_created']) && $_SESSION['recipe_created']) {
+    $createdPopup = true;
+    unset($_SESSION['recipe_created']);
+}
+if (isset($_SESSION['recipe_updated']) && $_SESSION['recipe_updated']) {
+    $updatedPopup = true;
+    unset($_SESSION['recipe_updated']);
+}
+
+// this will get the action from query string EDIT, DELETE, or NULL
 $action = $_GET['action'] ?? null;
 
 try {
-    // join admins to get the creator for each recipe
     $stmt = $db->query("
         SELECT r.*, a.username AS admin_username
         FROM recipes r
@@ -33,7 +49,7 @@ try {
   <table border="1" cellpadding="10">
     <tr>
       <th>Name</th>
-      <th>Difficulty</th>
+      <th>Difficulty (1-5)</th>
       <th>Description</th>
       <th>Instructions</th>
       <th>Created By</th>
@@ -61,11 +77,22 @@ try {
     <?php endforeach; ?>
   </table>
 
-    <!--this is the backspace button-->
   <div style="margin-top: 2em;">
-    <a href="landingAdminPage.php" class="back-button">← Back to Dashboard</a>
+    <a href="landingAdminPage.php" class="back-button">&larr; Back to Dashboard</a>
   </div>
+
+  <?php if ($deletedPopup): ?>
+    <script>alert("Recipe successfully deleted.");</script>
+  <?php endif; ?>
+  <?php if ($createdPopup): ?>
+    <script>alert("Recipe successfully added.");</script>
+  <?php endif; ?>
+  <?php if ($updatedPopup): ?>
+    <script>alert("Recipe successfully updated.");</script>
+  <?php endif; ?>
+
 </body>
 </html>
+
 
 

@@ -10,7 +10,7 @@ class Database {
   try {
      require_once("/home/group12-sp25/DBgroup12.php");
       $mysqli = new PDO('mysql:host='.DBHOST.';dbname='.DBNAME, USERNAME, PASSWORD);
-      echo "Successful Connection";
+      //echo "Successful Connection";
    }  catch (PDOException $e){
     echo "Could not Connect to Database";
   }

@@ -5,13 +5,14 @@ ini_set('display_errors', 1);
 
 require_once 'databaseCooked.php';
 $db = Database::dbConnect();
+$message = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $username = $_POST['username'] ?? '';
     $password = $_POST['password'] ?? '';
 
     if (empty($username) || empty($password)) {
-        echo "Please enter both username and password.";
+        $message = "Please enter both username and password.";
     } else {
         //checking to see if its an admin
         $stmt = $db->prepare("SELECT admin_id, password FROM admins WHERE username = :username");
@@ -29,21 +30,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
         }
 
-        $stmt = $db->prepare("SELECT user_id, password FROM users WHERE username = :username");
-        $stmt->bindParam(':username', $username);
+        //allow login if username or email match
+        $stmt = $db->prepare("SELECT user_id, username, password FROM users WHERE username = :input OR email = :input");
+        $stmt->bindParam(':input', $username);
         $stmt->execute();
 
-        $message = "";
         if ($stmt->rowCount() === 1) {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
             if (password_verify($password, $row['password'])) {
                 $_SESSION['user_id'] = $row['user_id'];
-                $_SESSION['username'] = $username;
+                $_SESSION['username'] = $row['username'];
                 $_SESSION['role'] = 'user';
                 header("Location: index.php");
                 exit;
             } else {
-                $message = "Invalid password. Please try again";
+                $message = "Invalid password. Please try again.";
             }
         } else {
             $message = "User not found.<br><a href='create_user.php'>Create Account Here</a>";
@@ -143,7 +144,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <?= $message ?>
         <h2>Login</h2>
         <form method="POST" action="login.php">
-          <label for="username">Username:</label>
+          <label for="username">Username or Email:</label>
           <input type="text" name="username" id="username" required>
 
           <label for="password">Password:</label>

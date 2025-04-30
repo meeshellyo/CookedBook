@@ -27,6 +27,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
         }
 
+        //needed for popup message
+        $_SESSION['recipe_created'] = true;
+
         // redirect on success
         header("Location: adminManageRecipe.php");
         exit();

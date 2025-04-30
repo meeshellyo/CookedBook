@@ -16,14 +16,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     try {
-        // Update recipe
+        // update recipe
         $stmt = $db->prepare("UPDATE recipes SET name = ?, difficulty = ?, description = ?, instructions = ? WHERE recipe_id = ?");
         $stmt->execute([$name, $difficulty, $description, $instructions, $id]);
 
-        // Delete old ingredients
+        // delete old ingredients
         $db->prepare("DELETE FROM recipe_ingredients WHERE recipe_id = ?")->execute([$id]);
 
-        // Insert new ingredients
+        // insert new ingredients
         if (!empty($ingredients)) {
             $stmt = $db->prepare("INSERT INTO recipe_ingredients (recipe_id, ingredient_id) VALUES (?, ?)");
             foreach ($ingredients as $ingId) {
@@ -31,8 +31,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
+        //popup
+        $_SESSION['recipe_updated'] = true;
+
+        // redirect back
         header("Location: adminManageRecipe.php");
         exit();
+        
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }

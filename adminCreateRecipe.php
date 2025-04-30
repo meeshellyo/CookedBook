@@ -9,6 +9,13 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     exit();
 }
 
+// check for flash message
+$createdPopup = false;
+if (isset($_SESSION['recipe_created']) && $_SESSION['recipe_created']) {
+    $createdPopup = true;
+    unset($_SESSION['recipe_created']);
+}
+
 // this gets the ingredients 
 $stmt = $db->query("SELECT * FROM ingredients ORDER BY name ASC");
 $ingredients = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -88,5 +95,9 @@ $ingredients = $stmt->fetchAll(PDO::FETCH_ASSOC);
             &larr; Back to Dashboard
         </a>
     </div>
+
+    <?php if ($createdPopup): ?>
+        <script>alert("Recipe successfully added.");</script>
+    <?php endif; ?>
 </body>
 </html>

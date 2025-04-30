@@ -1,3 +1,5 @@
+-- all needed tables for our cooked book.
+DROP TABLE IF EXISTS shopping_cart;
 DROP TABLE IF EXISTS user_ingredients;
 DROP TABLE IF EXISTS users_favorites;
 DROP TABLE IF EXISTS recipe_ingredients;
@@ -5,7 +7,6 @@ DROP TABLE IF EXISTS ingredients;
 DROP TABLE IF EXISTS recipes;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS admins;
-
 
 --tables
 CREATE TABLE admins(
@@ -61,3 +62,13 @@ CREATE TABLE users_ingredients (
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
     FOREIGN KEY (ingredient_id) REFERENCES ingredients(ingredient_id) ON DELETE CASCADE
 );
+
+CREATE TABLE shopping_cart (
+  cart_id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  ingredient_name VARCHAR(255) NOT NULL,
+  quantity VARCHAR(100),
+  added_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
