@@ -218,11 +218,17 @@ if ($source === 'userRecipes' && $creator) {
                 <?= htmlspecialchars($ing['name']) ?> <?= $ing['quantity'] ? '(' . htmlspecialchars($ing['quantity']) . ')' : '' ?>
               </div>
 
-              <?php if (isset($_SESSION['user_id'])): ?>
-                <form action="addToCart.php" method="POST" class="ingredient-form">
+              <?php if (isset($_SESSION['user_id'])): 
+                $cartCheck = $conn->prepare("SELECT 1 FROM shopping_cart WHERE user_id = ? AND ingredient_name = ?");
+                $cartCheck->execute([$userId, $ing['name']]);
+                $isInCart = $cartCheck->fetch();
+              ?>
+                <form action="<?= $isInCart ? 'removeFromCart.php' : 'addToCart.php' ?>" method="POST" class="ingredient-form">
                   <input type="hidden" name="ingredient_name" value="<?= htmlspecialchars($ing['name']) ?>">
                   <input type="hidden" name="quantity" value="<?= htmlspecialchars($ing['quantity']) ?>">
-                  <button type="submit" class="add-cart-button">Add to Cart</button>
+                  <button type="submit" class="add-cart-button">
+                    <?= $isInCart ? '❌ In Shopping Cart' : 'Add to Cart' ?>
+                  </button>
                 </form>
               <?php endif; ?>
             </div>
@@ -237,12 +243,12 @@ if ($source === 'userRecipes' && $creator) {
     </div>
 
     <div class="recipe-back-buttons">
-    <?php
-    $mainBackLink = (isset($_SESSION['role']) && $_SESSION['role'] === 'admin' && !isset($_SESSION['viewasuser']))
-        ? 'landingAdminPage.php'
-        : 'index.php';
-    ?>
-    <a href="<?= $mainBackLink ?>" class="back-button">← Return to Main Page</a>
+      <?php
+        $mainBackLink = (isset($_SESSION['role']) && $_SESSION['role'] === 'admin' && !isset($_SESSION['viewasuser']))
+            ? 'landingAdminPage.php'
+            : 'index.php';
+      ?>
+      <a href="<?= $mainBackLink ?>" class="back-button">← Return to Main Page</a>
       <a href="<?= $backLink ?>" class="back-button">
         ← Return to <?= 
           ($source === 'userRecipes' && $creator) ? htmlspecialchars($creator) . "'s Recipes" : 
@@ -255,4 +261,3 @@ if ($source === 'userRecipes' && $creator) {
   </div>
 </body>
 </html>
-

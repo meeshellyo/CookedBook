@@ -8,12 +8,22 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $conn = Database::dbConnect();
-$cartId = $_GET['id'] ?? null;
+$userId = $_SESSION['user_id'];
 
+$cartId = $_GET['id'] ?? null;
+$ingredient = $_POST['ingredient_name'] ?? null;
+
+// remove by cart_id (used in myShoppingCart.php)
 if ($cartId) {
   $stmt = $conn->prepare("DELETE FROM shopping_cart WHERE cart_id = ? AND user_id = ?");
-  $stmt->execute([$cartId, $_SESSION['user_id']]);
+  $stmt->execute([$cartId, $userId]);
 }
 
-header("Location: myShoppingCart.php");
+// remove by ingredient_name (used in recipe page)
+if ($ingredient) {
+  $stmt = $conn->prepare("DELETE FROM shopping_cart WHERE user_id = ? AND ingredient_name = ?");
+  $stmt->execute([$userId, $ingredient]);
+}
+
+header("Location: " . $_SERVER['HTTP_REFERER']);
 exit();
