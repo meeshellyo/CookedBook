@@ -4,18 +4,24 @@
 # **The Cooked Book**
 Creators: Campbell Furr, Joshua J, Michelle Tra, Tyler Tran
 ## Introduction
-The Cooked Book is a functional and user-friendly website that helps users decide what to cook based on the ingredients they have. By inputting available ingredients, users will receive meal suggestions, making cooking more convenient and reducing food waste.  
+The Cooked Book is a collaborative web application that helps users decide what to cook based on the ingredients they already have at home. By selecting available ingredients, users receive personalized recipe suggestions—making meal planning more convenient and helping reduce food waste.
+
 ## Features
-- Enable users to save and organize their favorite recipes
-- Allow admins to manage and update the recipe database
-- Provide users with personalized meal suggestions
-- Create an easy-to-use platform for users to navigate through
+- 🔐 User Authentication: Login system to access personalized features
+- 🛒 Shopping Cart: Users can add ingredients or recipes for grocery planning
+- ❤️ Favorited Recipes: Save and manage a list of favorite recipes
+- 🍳 Ingredient-Based Recipe Matching: Suggests recipes based on selected ingredients
+- 🧑‍🍳 Admin Controls: Only admins (project creators) can add, edit, or delete recipes
+  
 ## Technologies Used
-[TO BE CONT.]
+- Frontend: HTML, CSS
+- Backend: PHP
+- Database: MySQL
+- Version Control: Git & Github
+
 ## Future Improvements
-- Give standard users the ability to add recipes to database
-- AI to make recipes for you
-- Recipe rating system
-- Make recipes available for download
-- Give authors the ability to embed media
-- Add a dark mode theme
+- 📝 Let users contribute recipes to the database
+- 🤖 Integrate AI to generate recipes based on ingredients
+- ⭐ Add a recipe rating & review system
+- 📄 Enable recipe downloads (PDF or text format)
+- 🎥 Allow embedded media (images/videos) for recipes
