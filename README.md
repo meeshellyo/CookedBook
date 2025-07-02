@@ -14,7 +14,7 @@ The Cooked Book is a collaborative web application that helps users decide what 
 - 🧑‍🍳 Admin Controls: Only admins (project creators) can add, edit, or delete recipes
   
 ## Technologies Used
-- Frontend: HTML, CSS
+- Frontend: HTML, CSS, JavaScript
 - Backend: PHP
 - Database: MySQL
 - Version Control: Git & Github
